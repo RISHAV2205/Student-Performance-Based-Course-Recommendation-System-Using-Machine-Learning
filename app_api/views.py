@@ -7,7 +7,8 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
-# Load model once
+
+# Load model
 model = joblib.load('app/ml/model.pkl')
 
 
@@ -18,10 +19,10 @@ class PredictView(View):
         try:
             data = json.loads(request.body)
 
-            # Convert input to DataFrame
+            # Convert to DataFrame
             input_df = pd.DataFrame([data])
 
-            # Prediction (pipeline handles preprocessing)
+            # Prediction
             prediction = model.predict(input_df)
 
             return JsonResponse({
